@@ -279,7 +279,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .collab__photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter .6s var(--ease); }
 .collab:hover .collab__photo img { filter: none; }
 .collab__name { font-size: .875rem; color: color-mix(in srgb, var(--fg) 72%, transparent); transition: color .4s var(--ease); }
-.collab:hover .collab__name, .collab:focus-visible .collab__name { color: var(--fg); }
+.collab:hover .collab__name, .collab:focus-visible .collab__name { color: var(--accent); }
 .collab__icon { flex: none; width: 15px; height: 15px; color: var(--muted); transition: color .4s var(--ease); }
 .collab:hover .collab__icon { color: var(--accent); }
 .collab__icon svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
@@ -706,10 +706,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   }
 }
 
-/* sem movimento automático: a faixa vira uma linha estática */
+/* a faixa de colaborações continua rolando (lenta, pausa no hover)
+   mesmo com "reduzir animações" ligado no sistema */
 @media (prefers-reduced-motion: reduce) {
-  .marquee__track { animation: none; width: auto; }
-  .marquee__list[aria-hidden="true"] { display: none; }
-  .marquee__list { flex-wrap: wrap; row-gap: 12px; padding: 4px var(--gutter); }
-  .marquee { -webkit-mask-image: none; mask-image: none; }
+  .marquee__track { animation-duration: var(--marquee-duration, 60s) !important; }
+  .collab, .collab * { transition-duration: .3s !important; }
 }

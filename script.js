@@ -350,8 +350,8 @@ const I18N = {
       first.insertAdjacentHTML('beforeend', COLLABS.map(c => collabItem(c, true)).join(''));
     }
     track.insertAdjacentHTML('beforeend', `<ul class="marquee__list" aria-hidden="true">${first.innerHTML.replace(/<a /g, '<a tabindex="-1" ')}</ul>`);
-    // velocidade constante (~32 px/s), qualquer que seja o número de cards
-    track.style.setProperty('--marquee-duration', `${Math.round(first.scrollWidth / 32)}s`);
+    // velocidade constante (~28 px/s), qualquer que seja o número de cards
+    track.style.setProperty('--marquee-duration', `${Math.round(first.scrollWidth / 28)}s`);
   }
   buildMarquee();
   let mqTimer;
