@@ -305,5 +305,34 @@ const I18N = {
   /* ---------- Início: idioma detectado (ou salvo) e entrada do hero ---------- */
   applyLang(lang);
   observe(document);
-  requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('is-ready')));
+  const start = () => requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('is-ready')));
+
+  /* ---------- Boas-vindas: só quando não há idioma salvo ---------- */
+  const welcome = $('#welcome');
+  const hasSaved = saved === 'pt' || saved === 'en';
+  if (hasSaved || !welcome || typeof welcome.showModal !== 'function') {
+    if (welcome) welcome.remove();
+    start();
+  } else {
+    let closing = false;
+    const choose = async l => {
+      if (closing) return;
+      closing = true;
+      store.set('lang', l);
+      if (l !== lang) applyLang(l);
+      welcome.classList.add('is-closing');
+      await wait(600);
+      welcome.close();
+      welcome.remove();
+      start();
+    };
+    welcome.addEventListener('click', e => {
+      const b = e.target.closest('[data-welcome]');
+      if (b) choose(b.dataset.welcome);
+    });
+    // Esc mantém o idioma detectado no navegador
+    welcome.addEventListener('cancel', e => { e.preventDefault(); choose(lang); });
+    welcome.showModal();
+    $(`[data-welcome="${lang}"]`, welcome).focus();
+  }
 })();

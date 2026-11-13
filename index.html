@@ -26,6 +26,22 @@
 </head>
 <body>
 
+  <!-- Boas-vindas: aparece só na primeira visita (sem idioma salvo) -->
+  <dialog class="welcome" id="welcome" aria-labelledby="welcomeTitle" aria-describedby="welcomeText">
+    <p class="welcome__logo">Laiza Elc</p>
+    <h1 class="welcome__title" id="welcomeTitle">
+      <span lang="pt-BR">Bem-vindo</span><span class="welcome__slash" aria-hidden="true">/</span><span lang="en">Welcome</span>
+    </h1>
+    <p class="welcome__text" id="welcomeText">
+      <span lang="pt-BR">Escolha o idioma do site.</span>
+      <span lang="en">Choose the site language.</span>
+    </p>
+    <div class="welcome__actions">
+      <button type="button" class="btn" data-welcome="pt" lang="pt-BR">Português</button>
+      <button type="button" class="btn" data-welcome="en" lang="en">English</button>
+    </div>
+  </dialog>
+
   <header class="nav" id="nav" >
     <a class="nav__logo" href="#top">Laiza Elc</a>
     <nav class="nav__links" data-i18n-aria="aria.nav">
