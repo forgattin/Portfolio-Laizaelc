@@ -1,13 +1,132 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portfólio</title>
+  <title>Laiza Elc | Editora de vídeo</title>
+  <meta name="description" content="Portfólio de Laiza Elc, editora de vídeo para Shorts e vídeos longos.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231C1D21'/%3E%3Cpath d='M10 6h12v6l-6 5-6-5z' fill='%23F2C14E'/%3E%3Crect x='15' y='14' width='2' height='13' fill='%23F2C14E'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') d.dataset.theme = t;
+        var l = localStorage.getItem('lang');
+        if (l === 'pt' || l === 'en') { d.classList.add('has-lang'); d.lang = l === 'pt' ? 'pt-BR' : 'en'; }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Schibsted+Grotesk:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Portfólio</h1>
-  <script src="script.js"></script>
+
+  <!-- Seletor de idioma na abertura -->
+  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <p class="gate__name">Laiza Elc</p>
+    <h1 class="gate__title" id="gate-title">
+      <span lang="pt-BR">Escolha o idioma</span>
+      <span lang="en">Choose your language</span>
+    </h1>
+    <div class="gate__choices">
+      <button type="button" class="gate__choice" data-set-lang="pt" lang="pt-BR"><small>PT</small>Português</button>
+      <button type="button" class="gate__choice" data-set-lang="en" lang="en"><small>EN</small>English</button>
+    </div>
+  </div>
+
+  <header class="bar" data-gated>
+    <a class="bar__mark" href="#top">Laiza Elc</a>
+    <span class="bar__tc" id="tc" aria-hidden="true">00:00:00:00</span>
+    <div class="bar__tools">
+      <div class="lang-switch" role="group" data-i18n-aria="aria.lang" aria-label="Idioma">
+        <button type="button" data-set-lang="pt" aria-pressed="true">PT</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="theme-toggle" id="themeToggle">
+        <span class="theme-toggle__icon" aria-hidden="true"></span>
+        <span class="theme-toggle__label">Modo claro</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top" data-gated>
+    <section class="hero" id="inicio" data-scrub="intro" data-color="muted">
+      <div class="hero__aside">
+        <p class="hero__role" data-i18n="hero.role">Editora de vídeo</p>
+        <p class="hero__lede" data-i18n="hero.lede"></p>
+        <a class="hero__cta" href="#shorts" data-i18n="hero.cta">Ver trabalhos</a>
+      </div>
+      <h2 class="hero__name" aria-label="Laiza Elc"><span>Laiza</span><span>Elc</span></h2>
+      <span class="hero__cut" aria-hidden="true"></span>
+    </section>
+
+    <section class="work work--shorts" id="shorts" data-scrub="shorts" data-color="short">
+      <div class="work__head">
+        <h2 class="work__title">Shorts</h2>
+        <div class="work__meta">
+          <p class="work__note" data-i18n="shorts.note"></p>
+          <div class="filters" role="group" data-filters="shorts" data-i18n-aria="filter.label"></div>
+        </div>
+      </div>
+      <ul class="shorts" id="shortsList"></ul>
+    </section>
+
+    <section class="work work--long" id="longos" data-scrub="long" data-color="long">
+      <div class="work__head">
+        <h2 class="work__title" data-i18n="long.title">Vídeos longos</h2>
+        <div class="work__meta">
+          <p class="work__note" data-i18n="long.note"></p>
+          <div class="filters" role="group" data-filters="long" data-i18n-aria="filter.label"></div>
+        </div>
+      </div>
+      <ul class="long-list" id="longList"></ul>
+    </section>
+
+    <section class="about" id="sobre" data-scrub="about" data-color="muted">
+      <div class="about__text">
+        <h2 class="about__title" data-i18n="about.title">Sobre</h2>
+        <p class="about__body" data-i18n="about.body"></p>
+      </div>
+      <div class="about__photo"><span data-i18n="about.photo">Foto em breve</span></div>
+    </section>
+
+    <section class="contact" id="contato" data-scrub="contact" data-color="head">
+      <p class="contact__lead" data-i18n="contact.lead"></p>
+      <a class="contact__link" href="https://x.com/laizaelc" target="_blank" rel="noopener">@laizaelc</a>
+      <p class="contact__note" data-i18n="contact.note"></p>
+    </section>
+  </main>
+
+  <footer class="foot" data-gated>© 2026 Laiza Elc</footer>
+
+  <!-- Timeline de navegação -->
+  <nav class="scrub" id="scrub" data-gated data-i18n-aria="aria.scrub">
+    <div class="scrub__track" id="scrubTrack">
+      <div class="scrub__head" id="playhead" role="slider" tabindex="0"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-i18n-aria="aria.playhead"></div>
+    </div>
+  </nav>
+
+  <div class="preview" id="preview" aria-hidden="true">
+    <div class="preview__inner">
+      <span class="frame frame--long" style="--c:var(--long)">
+        <span class="frame__word"></span><span class="frame__dur"></span>
+      </span>
+    </div>
+  </div>
+
+  <dialog class="player" id="player" aria-labelledby="playerTitle">
+    <div class="player__frame" id="playerFrame"></div>
+    <div class="player__bar">
+      <p class="player__title" id="playerTitle"></p>
+      <button type="button" class="player__close" id="playerClose" data-i18n="player.close">Fechar</button>
+    </div>
+  </dialog>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
