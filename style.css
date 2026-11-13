@@ -189,12 +189,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   align-items: center;
   padding: 120px var(--gutter) clamp(48px, 7vh, 72px);
 }
-.hero__text { grid-column: 1 / 5; }
+.hero__text {
+  grid-column: 1 / 5;
+  /* tamanho do nome; o avatar é calculado a partir dele */
+  --name-size: clamp(2.25rem, 3.4vw, 3.25rem);
+}
 .hero__name {
   margin: 0;
   font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(2.25rem, 3.4vw, 3.25rem);
+  font-size: var(--name-size);
   line-height: 1;
   letter-spacing: .02em;
   text-transform: uppercase;
@@ -204,8 +208,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* foto de perfil acima do nome: preto e branco, ganha cor no hover */
 .avatar {
-  width: 80px; height: 80px;
-  margin-bottom: clamp(24px, 3.5vh, 36px);
+  /* diâmetro ≈ largura do nome "LAIZA ELC" (≈ 3,4× o tamanho da fonte) */
+  width: calc(var(--name-size) * 3.3);
+  height: calc(var(--name-size) * 3.3);
+  margin-bottom: calc(var(--name-size) * .6);
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -214,7 +220,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background: var(--surface);
   font-family: var(--display);
   font-weight: 300;
-  font-size: 2rem;
+  font-size: calc(var(--name-size) * 1.4);
   line-height: 1;
   color: var(--muted);
   transition: border-color .6s var(--ease);
