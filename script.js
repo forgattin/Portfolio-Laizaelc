@@ -302,32 +302,8 @@ const I18N = {
   player.addEventListener('click', e => { if (e.target === player) player.close(); });
   player.addEventListener('close', () => { $('#playerFrame').innerHTML = ''; });
 
-  /* ---------- Abertura ---------- */
-  const gate = $('#gate');
-  const gated = $$('[data-gated]');
-  const start = () => requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('is-ready')));
-
+  /* ---------- Início: idioma detectado (ou salvo) e entrada do hero ---------- */
   applyLang(lang);
   observe(document);
-
-  if (root.classList.contains('has-lang')) {
-    gate.remove();
-    start();
-  } else {
-    gated.forEach(el => { el.inert = true; });
-    const pref = $(`[data-set-lang="${lang}"]`, gate);
-    if (pref) pref.focus({ preventScroll: true });
-    gate.addEventListener('click', async e => {
-      const b = e.target.closest('[data-set-lang]');
-      if (!b || gate.classList.contains('is-leaving')) return;
-      store.set('lang', b.dataset.setLang);
-      applyLang(b.dataset.setLang);
-      gated.forEach(el => { el.inert = false; });
-      gate.classList.add('is-leaving');
-      start();
-      await wait(800);
-      gate.remove();
-      root.classList.add('has-lang');
-    });
-  }
+  requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('is-ready')));
 })();
