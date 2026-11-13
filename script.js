@@ -17,6 +17,9 @@ const CATS = {
   irl: 'IRL',
 };
 
+// Vídeo de destaque do topo (showreel). Cole o ID do YouTube quando tiver.
+const REEL = { id: 'reel', youtube: '', thumb: '', title: { pt: 'Showreel 2026', en: 'Showreel 2026' } };
+
 const WORK = {
   shorts: [
     { id: 's1', cat: 'valorant', dur: '0:42', youtube: '', title: { pt: 'Ace de Sheriff no último round', en: 'Sheriff ace in the final round' } },
@@ -44,6 +47,7 @@ const I18N = {
     'theme.toLight': 'Ativar modo claro', 'theme.toDark': 'Ativar modo escuro',
     'hero.lede': 'Edição para criadores de conteúdo. Shorts que prendem nos primeiros segundos e vídeos longos com ritmo do começo ao fim.',
     'hero.cta': 'Ver trabalhos',
+    'hero.reelAria': 'Assistir ao showreel', 'hero.reelSoon': 'Em breve', 'hero.reelWatch': 'Assistir',
     'work.title': 'Trabalhos', 'work.long': 'Vídeos longos',
     'filter.all': 'Todos',
     'about.title': 'Sobre',
@@ -63,6 +67,7 @@ const I18N = {
     'theme.toLight': 'Switch to light mode', 'theme.toDark': 'Switch to dark mode',
     'hero.lede': 'Editing for content creators. Shorts that hook in the first seconds and long-form videos that hold their pace to the end.',
     'hero.cta': 'See the work',
+    'hero.reelAria': 'Watch the showreel', 'hero.reelSoon': 'Coming soon', 'hero.reelWatch': 'Watch',
     'work.title': 'Work', 'work.long': 'Long-form',
     'filter.all': 'All',
     'about.title': 'About',
@@ -99,6 +104,10 @@ const I18N = {
   const byId = {};
   WORK.shorts.forEach(i => { byId[i.id] = { ...i, format: 'short' }; });
   WORK.long.forEach(i => { byId[i.id] = { ...i, format: 'long' }; });
+  byId.reel = { ...REEL, format: 'long' };
+  const reelThumb = REEL.thumb || (REEL.youtube ? `https://i.ytimg.com/vi/${encodeURIComponent(REEL.youtube)}/maxresdefault.jpg` : '');
+  if (reelThumb) document.querySelector('.reel__img').style.backgroundImage = `url('${reelThumb}')`;
+  if (REEL.youtube) document.querySelector('[data-i18n="hero.reelSoon"]').dataset.i18n = 'hero.reelWatch';
 
   /* ---------- Revelação ao rolar ---------- */
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
@@ -285,7 +294,7 @@ const I18N = {
     $('#playerFrame').innerHTML = i.youtube
       ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(i.youtube)}?autoplay=1&rel=0" title="${esc(i.title[lang])}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
       : `<span class="player__soon">${esc(t('player.soon'))}</span>`;
-    $('#playerCat').textContent = CATS[i.cat];
+    $('#playerCat').textContent = i.cat ? CATS[i.cat] : '';
     $('#playerTitle').textContent = i.title[lang];
     player.showModal();
   }
