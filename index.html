@@ -65,13 +65,11 @@
   <main>
     <section class="hero" id="top">
       <div class="hero__text">
+        <!-- Foto: troque o "L" por <img src="foto.jpg" alt=""> -->
+        <span class="avatar" aria-hidden="true">L</span>
         <h2 class="hero__name">Laiza Elc</h2>
         <p class="hero__role">Video Editor</p>
-        <div class="hero__bio">
-          <!-- Foto: troque o "L" por <img src="foto.jpg" alt="Laiza Elc"> -->
-          <span class="avatar" aria-hidden="true">L</span>
-          <p class="hero__lede" data-i18n="hero.lede"></p>
-        </div>
+        <p class="hero__lede" data-i18n="hero.lede"></p>
         <a class="hero__cta" href="#trabalhos" data-i18n="hero.cta">Ver trabalhos</a>
       </div>
       <figure class="hero__reel">
@@ -86,20 +84,11 @@
       </figure>
     </section>
 
-    <section class="clients" aria-labelledby="clientsTitle">
-      <h2 class="clients__title" id="clientsTitle" data-i18n="clients.title">Clientes</h2>
-      <div class="marquee">
-        <div class="marquee__track">
-          <ul class="marquee__list">
-            <li>Logo 1</li><li>Logo 2</li><li>Logo 3</li><li>Logo 4</li>
-            <li>Logo 5</li><li>Logo 6</li><li>Logo 7</li><li>Logo 8</li>
-          </ul>
-          <!-- cópia para o loop contínuo (mantenha igual à lista acima) -->
-          <ul class="marquee__list" aria-hidden="true">
-            <li>Logo 1</li><li>Logo 2</li><li>Logo 3</li><li>Logo 4</li>
-            <li>Logo 5</li><li>Logo 6</li><li>Logo 7</li><li>Logo 8</li>
-          </ul>
-        </div>
+    <section class="collabs" aria-labelledby="collabsTitle">
+      <h2 class="collabs__title" id="collabsTitle" data-i18n="collabs.title">Colaborações</h2>
+      <!-- Os cards são gerados pelo script.js (lista COLLABS) -->
+      <div class="marquee" id="collabs">
+        <div class="marquee__track"></div>
       </div>
     </section>
 

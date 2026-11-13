@@ -20,6 +20,20 @@ const CATS = {
 // Vídeo de destaque do topo (showreel). Cole o ID do YouTube quando tiver.
 const REEL = { id: 'reel', youtube: '', thumb: '', title: { pt: 'Showreel 2026', en: 'Showreel 2026' } };
 
+// Colaborações (faixa abaixo do topo).
+// platform: 'youtube' | 'twitch' | 'instagram'
+// url: link do perfil (opcional). photo: link da foto (opcional).
+const COLLABS = [
+  { name: 'Creator 1', platform: 'twitch', url: '', photo: '' },
+  { name: 'Creator 2', platform: 'youtube', url: '', photo: '' },
+  { name: 'Creator 3', platform: 'instagram', url: '', photo: '' },
+  { name: 'Creator 4', platform: 'twitch', url: '', photo: '' },
+  { name: 'Creator 5', platform: 'youtube', url: '', photo: '' },
+  { name: 'Creator 6', platform: 'twitch', url: '', photo: '' },
+  { name: 'Creator 7', platform: 'instagram', url: '', photo: '' },
+  { name: 'Creator 8', platform: 'youtube', url: '', photo: '' },
+];
+
 const WORK = {
   shorts: [
     { id: 's1', cat: 'valorant', dur: '0:42', youtube: '', title: { pt: 'Ace de Sheriff no último round', en: 'Sheriff ace in the final round' } },
@@ -47,7 +61,7 @@ const I18N = {
     'theme.toLight': 'Ativar modo claro', 'theme.toDark': 'Ativar modo escuro',
     'hero.lede': 'Edição para criadores de conteúdo. Shorts que prendem nos primeiros segundos e vídeos longos com ritmo do começo ao fim.',
     'hero.cta': 'Ver trabalhos',
-    'clients.title': 'Clientes',
+    'collabs.title': 'Colaborações',
     'hero.reelAria': 'Assistir ao showreel', 'hero.reelSoon': 'Em breve', 'hero.reelWatch': 'Assistir',
     'work.title': 'Trabalhos', 'work.long': 'Vídeos longos',
     'filter.all': 'Todos',
@@ -68,7 +82,7 @@ const I18N = {
     'theme.toLight': 'Switch to light mode', 'theme.toDark': 'Switch to dark mode',
     'hero.lede': 'Editing for content creators. Shorts that hook in the first seconds and long-form videos that hold their pace to the end.',
     'hero.cta': 'See the work',
-    'clients.title': 'Clients',
+    'collabs.title': 'Collaborations',
     'hero.reelAria': 'Watch the showreel', 'hero.reelSoon': 'Coming soon', 'hero.reelWatch': 'Watch',
     'work.title': 'Work', 'work.long': 'Long-form',
     'filter.all': 'All',
@@ -303,6 +317,52 @@ const I18N = {
   $('#playerClose').addEventListener('click', () => player.close());
   player.addEventListener('click', e => { if (e.target === player) player.close(); });
   player.addEventListener('close', () => { $('#playerFrame').innerHTML = ''; });
+
+  /* ---------- Colaborações: faixa contínua ---------- */
+  const ICONS = {
+    youtube: '<svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10 9.2v5.6l4.8-2.8z"/></svg>',
+    twitch: '<svg viewBox="0 0 24 24"><path d="M4.5 3.5h16v10l-4 4h-4l-3 3v-3h-5z"/><path d="M11 8v4M15.5 8v4"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17" cy="7" r=".6"/></svg>',
+  };
+  const PLATFORM = { youtube: 'YouTube', twitch: 'Twitch', instagram: 'Instagram' };
+
+  function collabItem(c, hidden) {
+    const photo = c.photo ? `<img src="${esc(c.photo)}" alt="" loading="lazy">` : esc(c.name.trim().charAt(0));
+    const inner =
+      `<span class="collab__photo" aria-hidden="true">${photo}</span>` +
+      `<span class="collab__name">${esc(c.name)}</span>` +
+      `<span class="collab__icon" role="img" aria-label="${PLATFORM[c.platform] || ''}">${ICONS[c.platform] || ''}</span>`;
+    const tab = hidden ? ' tabindex="-1"' : '';
+    return `<li${hidden ? ' aria-hidden="true"' : ''}>${c.url
+      ? `<a class="collab" href="${esc(c.url)}" target="_blank" rel="noopener"${tab}>${inner}</a>`
+      : `<span class="collab">${inner}</span>`}</li>`;
+  }
+
+  // repete os cards até a lista cobrir a tela e duplica para o loop sem emenda
+  function buildMarquee() {
+    const track = $('#collabs .marquee__track');
+    if (!track || !COLLABS.length) return;
+    let items = COLLABS.slice();
+    track.innerHTML = `<ul class="marquee__list">${items.map(c => collabItem(c)).join('')}</ul>`;
+    const first = track.firstElementChild;
+    let guard = 0;
+    while (first.scrollWidth < innerWidth && guard++ < 8) {
+      first.insertAdjacentHTML('beforeend', COLLABS.map(c => collabItem(c, true)).join(''));
+    }
+    track.insertAdjacentHTML('beforeend', `<ul class="marquee__list" aria-hidden="true">${first.innerHTML.replace(/<a /g, '<a tabindex="-1" ')}</ul>`);
+    // velocidade constante (~32 px/s), qualquer que seja o número de cards
+    track.style.setProperty('--marquee-duration', `${Math.round(first.scrollWidth / 32)}s`);
+  }
+  buildMarquee();
+  let mqTimer;
+  let lastW = innerWidth;
+  addEventListener('resize', () => {
+    if (innerWidth === lastW) return;
+    lastW = innerWidth;
+    clearTimeout(mqTimer);
+    mqTimer = setTimeout(buildMarquee, 200);
+  });
+  if (document.fonts) document.fonts.ready.then(buildMarquee);
 
   /* ---------- Início: idioma detectado (ou salvo) e entrada do hero ---------- */
   applyLang(lang);
