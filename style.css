@@ -107,7 +107,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .nav__links a { color: var(--muted); padding-bottom: 3px; }
 .nav__links a:hover, .nav__links a.is-active { color: var(--fg); }
 .nav__links a.is-active { background-size: 100% 1px; }
-.nav__end { justify-self: end; }
+.nav__end { justify-self: end; display: flex; align-items: center; gap: 20px; }
 .nav__menu { display: none; font-size: .875rem; }
 
 .menu {

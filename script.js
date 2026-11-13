@@ -252,13 +252,15 @@ const I18N = {
 
   /* ---------- Tema ---------- */
   function syncTheme() {
-    $('#themeToggle').setAttribute('aria-label', t(root.dataset.theme === 'light' ? 'theme.toDark' : 'theme.toLight'));
+    const label = t(root.dataset.theme === 'light' ? 'theme.toDark' : 'theme.toLight');
+    $$('.theme').forEach(b => b.setAttribute('aria-label', label));
   }
-  $('#themeToggle').addEventListener('click', () => {
+  // dois botões (topo e rodapé) controlam o mesmo tema
+  $$('.theme').forEach(b => b.addEventListener('click', () => {
     root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
     store.set('theme', root.dataset.theme);
     syncTheme();
-  });
+  }));
 
   /* ---------- Menu (celular) ---------- */
   const menu = $('#menu'), menuBtn = $('#menuBtn');
