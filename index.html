@@ -87,10 +87,16 @@
             <span class="cine__title"></span>
             <span class="cine__channel"></span>
           </div>
-          <div class="cine__bars"></div>
+          <button type="button" class="cine__arrow cine__arrow--prev" data-step="-1" data-i18n-aria="hero.cinePrev">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="cine__arrow cine__arrow--next" data-step="1" data-i18n-aria="hero.cineNext">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
+        <ul class="cine__thumbs" data-i18n-aria="hero.cineAria"></ul>
         <figcaption class="hero__cine-caption">
-          <span data-i18n="hero.cineLabel">Seleção de trabalhos</span>
+          <span><span data-i18n="hero.cineLabel">Seleção de trabalhos</span> <span class="cine__count" aria-hidden="true"></span></span>
           <a href="#trabalhos" data-i18n="hero.cineAll">Ver todos</a>
         </figcaption>
       </figure>

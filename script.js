@@ -80,7 +80,7 @@ const I18N = {
     'hero.lede': 'Edição para criadores de conteúdo. Shorts que prendem nos primeiros segundos e vídeos longos com ritmo do começo ao fim.',
     'hero.cta': 'Ver trabalhos',
     'collabs.title': 'Colaborações',
-    'hero.cineAria': 'Vitrine de trabalhos', 'hero.cineLabel': 'Seleção de trabalhos', 'hero.cineAll': 'Ver todos',
+    'hero.cineAria': 'Vitrine de trabalhos', 'hero.cineLabel': 'Seleção de trabalhos', 'hero.cineAll': 'Ver todos', 'hero.cinePrev': 'Vídeo anterior', 'hero.cineNext': 'Próximo vídeo',
     'hero.reelAria': 'Assistir ao showreel', 'hero.reelSoon': 'Em breve', 'hero.reelWatch': 'Assistir',
     'work.title': 'Trabalhos', 'work.long': 'Vídeos longos',
     'filter.all': 'Todos',
@@ -104,7 +104,7 @@ const I18N = {
     'hero.lede': 'Editing for content creators. Shorts that hook in the first seconds and long-form videos that hold their pace to the end.',
     'hero.cta': 'See the work',
     'collabs.title': 'Collaborations',
-    'hero.cineAria': 'Work showcase', 'hero.cineLabel': 'Selected work', 'hero.cineAll': 'See all',
+    'hero.cineAria': 'Work showcase', 'hero.cineLabel': 'Selected work', 'hero.cineAll': 'See all', 'hero.cinePrev': 'Previous video', 'hero.cineNext': 'Next video',
     'hero.reelAria': 'Watch the showreel', 'hero.reelSoon': 'Coming soon', 'hero.reelWatch': 'Watch',
     'work.title': 'Work', 'work.long': 'Long-form',
     'filter.all': 'All',
@@ -299,12 +299,15 @@ const I18N = {
 
   /* ---------- Cine: vitrine do topo (enquanto não há showreel) ---------- */
   const cine = (() => {
-    const box = $('#heroCine .cine');
+    const fig = $('#heroCine');
+    const box = fig && $('.cine', fig);
     const items = CINE.map(id => byId[id]).filter(i => i && i.youtube);
     if (!box || REEL.youtube || !items.length) return { render() {} };
     const SLIDE = 6; // segundos por vídeo
-    box.style.setProperty('--slide', `${SLIDE}s`);
-    const frames = $('.cine__frames', box), bars = $('.cine__bars', box), info = $('.cine__info', box);
+    fig.style.setProperty('--slide', `${SLIDE}s`);
+    const frames = $('.cine__frames', box), info = $('.cine__info', box);
+    const thumbs = $('.cine__thumbs', fig), count = $('.cine__count', fig);
+    thumbs.style.setProperty('--count', items.length);
     let idx = 0;
 
     frames.innerHTML = items.map((i, n) =>
@@ -312,17 +315,21 @@ const I18N = {
     ).join('');
     wireThumbs(frames);
 
+    const pad = n => String(n).padStart(2, '0');
     function paintInfo() {
       const i = items[idx];
       $('.cine__cat', info).textContent = catName(i.cat);
       $('.cine__title', info).textContent = titleOf(i);
       $('.cine__channel', info).textContent = i.channel || '';
       $('.cine__open', box).setAttribute('aria-label', `${t('card.open')}: ${titleOf(i)}`);
+      count.textContent = `${pad(idx + 1)} / ${pad(items.length)}`;
     }
 
     function render() {
-      bars.innerHTML = items.map((i, n) =>
-        `<button type="button" class="cine__bar" data-go="${n}" aria-label="${esc(`${n + 1} / ${items.length}: ${titleOf(i)}`)}"><span></span></button>`
+      thumbs.innerHTML = items.map((i, n) =>
+        `<li><button type="button" class="cine__thumb" data-go="${n}" aria-label="${esc(`${n + 1} / ${items.length}: ${titleOf(i)}`)}">` +
+        `<span class="cine__thumb-img"><img src="${esc(yt(i.youtube, 'mqdefault'))}" alt="" loading="lazy" decoding="async"></span>` +
+        `<span class="cine__progress"></span></button></li>`
       ).join('');
       show(idx, true);
     }
@@ -333,33 +340,43 @@ const I18N = {
         img.classList.remove('is-active');
         if (k === idx) { void img.offsetWidth; img.classList.add('is-active'); } // reinicia o zoom
       });
-      $$('.cine__bar', bars).forEach((b, k) => {
+      $$('.cine__thumb', thumbs).forEach((b, k) => {
         b.classList.toggle('is-done', k < idx);
         b.classList.remove('is-active');
-        if (k === idx) { void b.offsetWidth; b.classList.add('is-active'); }
+        b.removeAttribute('aria-current');
+        if (k === idx) { void b.offsetWidth; b.classList.add('is-active'); b.setAttribute('aria-current', 'true'); }
       });
       if (instant) { paintInfo(); return; }
       info.classList.add('is-out');
-      setTimeout(() => { paintInfo(); info.classList.remove('is-out'); }, reduce.matches ? 0 : 450);
+      setTimeout(() => { paintInfo(); info.classList.remove('is-out'); }, reduce.matches ? 0 : 400);
     }
 
-    // a barra ativa termina → próximo vídeo
-    bars.addEventListener('animationend', e => {
-      if (e.target.closest('.cine__bar.is-active')) show(idx + 1);
+    // a barra do vídeo atual termina → próximo
+    thumbs.addEventListener('animationend', e => {
+      if (e.target.closest('.cine__thumb.is-active')) show(idx + 1);
     });
-    bars.addEventListener('click', e => {
+    thumbs.addEventListener('click', e => {
       const b = e.target.closest('[data-go]');
       if (b) show(Number(b.dataset.go));
     });
+    $$('[data-step]', box).forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation();
+      show(idx + Number(b.dataset.step));
+    }));
     $('.cine__open', box).addEventListener('click', () => openPlayer(items[idx]));
-    // pausa com o mouse em cima, com foco dentro, ou fora da tela
-    const pause = on => box.classList.toggle('is-paused', on);
-    box.addEventListener('pointerenter', () => pause(true));
-    box.addEventListener('pointerleave', () => pause(false));
-    box.addEventListener('focusin', () => pause(true));
-    box.addEventListener('focusout', () => pause(false));
+    fig.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+    });
+
+    // pausa com o mouse em cima (quadro ou painel), com foco dentro, ou fora da tela
+    const pause = on => fig.classList.toggle('is-paused', on);
+    fig.addEventListener('pointerenter', () => pause(true));
+    fig.addEventListener('pointerleave', () => pause(false));
+    fig.addEventListener('focusin', () => pause(true));
+    fig.addEventListener('focusout', () => pause(false));
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(([e]) => { if (!box.matches(':hover')) pause(!e.isIntersecting); }).observe(box);
+      new IntersectionObserver(([e]) => { if (!fig.matches(':hover')) pause(!e.isIntersecting); }).observe(fig);
     }
     return { render };
   })();
