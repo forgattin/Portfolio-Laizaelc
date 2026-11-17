@@ -33,12 +33,12 @@ const CINE = ['l1', 'l13', 'l9', 'l15', 'l10', 'l3'];
 // platform: 'youtube' | 'twitch' | 'instagram'
 // url: link do perfil (opcional). photo: link da foto (opcional).
 const COLLABS = [
-  { name: 'Felca', platform: 'youtube', url: 'https://www.youtube.com/@felcaseita', photo: '' },
-  { name: 'felquinhas', platform: 'youtube', url: 'https://www.youtube.com/@felquinhas', photo: '' },
+  { name: 'Felca', platform: 'youtube', url: 'https://www.youtube.com/@felcaseita', photo: 'assets/collabs/felca.webp' },
+  { name: 'felquinhas', platform: 'youtube', url: 'https://www.youtube.com/@felquinhas', photo: 'assets/collabs/felquinhas.webp' },
   { name: 'Joojina', platform: 'instagram', url: 'https://www.instagram.com/joojinavlr/', photo: '' },
-  { name: 'Yulla', platform: 'youtube', url: 'https://www.youtube.com/@yullalol', photo: '' },
+  { name: 'Yulla', platform: 'youtube', url: 'https://www.youtube.com/@yullalol', photo: 'assets/collabs/yulla.webp' },
   { name: 'povcain', platform: 'instagram', url: 'https://www.instagram.com/povcain/', photo: '' },
-  { name: 'IANROCKS', platform: 'youtube', url: 'https://www.youtube.com/@IANROCKS0', photo: '' },
+  { name: 'IANROCKS', platform: 'youtube', url: 'https://www.youtube.com/@IANROCKS0', photo: 'assets/collabs/ianrocks.webp' },
 ];
 
 const WORK = {
