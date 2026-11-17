@@ -33,14 +33,12 @@ const CINE = ['l1', 'l13', 'l9', 'l15', 'l10', 'l3'];
 // platform: 'youtube' | 'twitch' | 'instagram'
 // url: link do perfil (opcional). photo: link da foto (opcional).
 const COLLABS = [
-  { name: 'Creator 1', platform: 'twitch', url: '', photo: '' },
-  { name: 'Creator 2', platform: 'youtube', url: '', photo: '' },
-  { name: 'Creator 3', platform: 'instagram', url: '', photo: '' },
-  { name: 'Creator 4', platform: 'twitch', url: '', photo: '' },
-  { name: 'Creator 5', platform: 'youtube', url: '', photo: '' },
-  { name: 'Creator 6', platform: 'twitch', url: '', photo: '' },
-  { name: 'Creator 7', platform: 'instagram', url: '', photo: '' },
-  { name: 'Creator 8', platform: 'youtube', url: '', photo: '' },
+  { name: 'Felca', platform: 'youtube', url: 'https://www.youtube.com/@felcaseita', photo: '' },
+  { name: 'felquinhas', platform: 'youtube', url: 'https://www.youtube.com/@felquinhas', photo: '' },
+  { name: 'Joojina', platform: 'instagram', url: 'https://www.instagram.com/joojinavlr/', photo: '' },
+  { name: 'Yulla', platform: 'youtube', url: 'https://www.youtube.com/@yullalol', photo: '' },
+  { name: 'povcain', platform: 'instagram', url: 'https://www.instagram.com/povcain/', photo: '' },
+  { name: 'IANROCKS', platform: 'youtube', url: 'https://www.youtube.com/@IANROCKS0', photo: '' },
 ];
 
 const WORK = {
@@ -87,7 +85,9 @@ const I18N = {
     'filter.lang': 'Idioma do vídeo', 'filter.langAll': 'Todos', 'filter.pt': 'Português', 'filter.en': 'English',
     'filter.empty': 'Nenhum vídeo com esses filtros.', 'filter.clear': 'Limpar filtros',
     'about.title': 'Sobre',
-    'about.body': 'Texto provisório. Aqui entra uma apresentação curta da Laiza: há quanto tempo edita, com quais criadores já trabalhou e como funciona o processo de edição.',
+    'about.body': 'Sou editora de vídeo, apaixonada por videogames e por transformar ideias em conteúdos que prendem a atenção, transmitindo sentimento e personalidade! Com 3 anos de atuação profissional, desenvolvi um olhar atento para ritmo, narrativa, estética e tendências, além de facilidade para me adaptar a diferentes estilos e propostas criativas.',
+    'about.body2': 'Meu trabalho combina criatividade e técnica para entregar vídeos dinâmicos, envolventes e alinhados à identidade de cada projeto. Estou sempre buscando novas referências, aprimorando minhas habilidades e explorando maneiras de tornar cada edição mais interessante e impactante.',
+    'about.expLabel': 'Experiência', 'about.exp': '3 anos de atuação profissional',
     'about.photo': 'Foto em breve',
     'about.formatsLabel': 'Formatos', 'about.formats': 'Shorts e vídeos longos',
     'about.contentLabel': 'Conteúdo',
@@ -111,7 +111,9 @@ const I18N = {
     'filter.lang': 'Video language', 'filter.langAll': 'All', 'filter.pt': 'Português', 'filter.en': 'English',
     'filter.empty': 'No videos match these filters.', 'filter.clear': 'Clear filters',
     'about.title': 'About',
-    'about.body': 'Placeholder text. A short introduction to Laiza goes here: how long she has been editing, which creators she has worked with and how her editing process works.',
+    'about.body': "I'm a video editor with a passion for video games and for turning ideas into content that grabs attention and carries real feeling and personality! Over three years of professional work, I've developed a keen eye for pacing, storytelling, aesthetics and trends, along with the flexibility to adapt to different styles and creative directions.",
+    'about.body2': "My work blends creativity and technique to deliver dynamic, engaging videos that stay true to each project's identity. I'm always looking for new references, sharpening my skills and finding ways to make every edit more compelling and impactful.",
+    'about.expLabel': 'Experience', 'about.exp': '3 years of professional work',
     'about.photo': 'Photo coming soon',
     'about.formatsLabel': 'Formats', 'about.formats': 'Shorts and long-form',
     'about.contentLabel': 'Content',
