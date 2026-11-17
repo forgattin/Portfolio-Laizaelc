@@ -6,6 +6,8 @@
      Deixe "" para mostrar "Vídeo em breve".
    - thumb (opcional): link de uma imagem de capa própria.
    - cat: uma das chaves de CATS.
+   - lang: idioma do vídeo, 'pt' ou 'en' (usado no filtro de idioma).
+   - title: título do vídeo. channel (opcional): canal onde foi publicado.
    ========================================================= */
 
 const CATS = {
@@ -15,6 +17,8 @@ const CATS = {
   gaming: 'Gaming',
   talking: 'Talking head',
   irl: 'IRL',
+  cortes: { pt: 'Cortes', en: 'Clips' },
+  podcast: 'Podcast',
 };
 
 // Vídeo de destaque do topo (showreel). Cole o ID do YouTube quando tiver.
@@ -36,20 +40,29 @@ const COLLABS = [
 
 const WORK = {
   shorts: [
-    { id: 's1', cat: 'valorant', dur: '0:42', youtube: '', title: { pt: 'Ace de Sheriff no último round', en: 'Sheriff ace in the final round' } },
-    { id: 's2', cat: 'lol', dur: '0:35', youtube: '', title: { pt: 'Pentakill de Jinx', en: 'Jinx pentakill' } },
-    { id: 's3', cat: 'react', dur: '0:47', youtube: '', title: { pt: 'Reação ao trailer novo', en: 'Reacting to the new trailer' } },
-    { id: 's4', cat: 'valorant', dur: '0:58', youtube: '', title: { pt: 'Clutch 1v4 na Ascent', en: '1v4 clutch on Ascent' } },
-    { id: 's5', cat: 'lol', dur: '0:51', youtube: '', title: { pt: 'O roubo de Barão que virou o jogo', en: 'The Baron steal that won the game' } },
-    { id: 's6', cat: 'react', dur: '0:39', youtube: '', title: { pt: 'Primeira vez vendo esse clipe', en: 'Watching this clip for the first time' } },
-    { id: 's7', cat: 'valorant', dur: '0:44', youtube: '', title: { pt: 'Leitura de rotação perfeita', en: 'A perfect rotation read' } },
-    { id: 's8', cat: 'lol', dur: '0:33', youtube: '', title: { pt: 'Outplay de Yasuo no meio', en: 'Yasuo outplay in mid lane' } },
+    { id: 's1', cat: 'valorant', lang: 'pt', youtube: 'gj2zL7tGWqE', title: 'Joojina 1' },
+    { id: 's2', cat: 'valorant', lang: 'pt', youtube: 'gixkvSP0WlA', title: 'Daiki - Chamber' },
+    { id: 's3', cat: 'valorant', lang: 'pt', youtube: '75uGwh9wgc0', title: 'TCK - Joojina' },
+    { id: 's4', cat: 'valorant', lang: 'pt', youtube: 'hbQBnVU5bSU', title: 'Yulla - Estetica' },
+    { id: 's5', cat: 'lol', lang: 'en', youtube: '-IAu_RVri38', title: 'MadScientist - Glaive or Voltaic' },
+    { id: 's6', cat: 'react', lang: 'en', youtube: 'Mik-UF44QME', title: 'ChaseOh - Math' },
   ],
   long: [
-    { id: 'l1', cat: 'gaming', dur: '24:18', youtube: '', title: { pt: 'Do ferro ao diamante em 30 dias', en: 'Iron to Diamond in 30 days' } },
-    { id: 'l2', cat: 'react', dur: '18:45', youtube: '', title: { pt: 'Reagindo aos melhores clipes do mês', en: 'Reacting to the best clips of the month' } },
-    { id: 'l3', cat: 'talking', dur: '12:30', youtube: '', title: { pt: 'Como organizo minha semana de gravação', en: 'How I plan my recording week' } },
-    { id: 'l4', cat: 'irl', dur: '27:09', youtube: '', title: { pt: 'Um dia inteiro na feira de games', en: 'A full day at the gaming expo' } },
+    { id: 'l1', cat: 'react', lang: 'en', youtube: 'aweNzBc45t4', title: 'The Most INSANE Minecraft Tiktoks Of All Time..', channel: 'IANROCKS' },
+    { id: 'l2', cat: 'react', lang: 'en', youtube: 'ORpL1mvb3ck', title: 'Secret Lokii' },
+    { id: 'l3', cat: 'react', lang: 'pt', youtube: 'cHv63LZ2IPY', title: 'os perigos noturnos da liberdade', channel: 'felquinhas' },
+    { id: 'l4', cat: 'react', lang: 'pt', youtube: '_213s5WyNcI', title: 'vai dar namoro do tiktok', channel: 'felquinhas' },
+    { id: 'l5', cat: 'react', lang: 'pt', youtube: 'X5DQUVilasI', title: 'egirls bebadas na liberdade são um perigo...', channel: 'felquinhas' },
+    { id: 'l6', cat: 'react', lang: 'pt', youtube: 'BveZIyYKweE', title: 'peculiaridades da rua augusta', channel: 'felquinhas' },
+    { id: 'l7', cat: 'react', lang: 'pt', youtube: 'H8XpVFc4SM0', title: 'pastora esquizoide do tiktok', channel: 'felquinhas' },
+    { id: 'l8', cat: 'react', lang: 'pt', youtube: 'sQ9QSBsIv6A', title: 'compilado tiktoks mais idi0tas da semana', channel: 'felquinhas' },
+    { id: 'l9', cat: 'irl', lang: 'en', youtube: '2XzBFEOdHP0', title: 'I Got Injured...', channel: 'IANROCKS' },
+    { id: 'l10', cat: 'gaming', lang: 'en', youtube: 'p99nOy109cw', title: 'sendo moggada por MITOMANIACAS', channel: 'Yulla' },
+    { id: 'l11', cat: 'gaming', lang: 'en', youtube: '5o_sJZUl0GE', title: 'VR store final' },
+    { id: 'l12', cat: 'gaming', lang: 'pt', youtube: 'uVCgRCqiBuM', title: 'Daiki - Haven' },
+    { id: 'l13', cat: 'talking', lang: 'pt', youtube: 'OCCsNsQr3Co', title: 'comentários do ifood', channel: 'Felca' },
+    { id: 'l14', cat: 'cortes', lang: 'pt', youtube: 'cR3PaxrJIZc', title: 'fazeno brincadeirinha gostosa', channel: 'felquinhas' },
+    { id: 'l15', cat: 'podcast', lang: 'pt', youtube: '-aPuVgZaxRY', title: 'Pablo Marçal foi cobrar o Felca ao vivo', channel: 'felquinhas' },
   ],
 };
 
@@ -65,6 +78,8 @@ const I18N = {
     'hero.reelAria': 'Assistir ao showreel', 'hero.reelSoon': 'Em breve', 'hero.reelWatch': 'Assistir',
     'work.title': 'Trabalhos', 'work.long': 'Vídeos longos',
     'filter.all': 'Todos',
+    'filter.lang': 'Idioma do vídeo', 'filter.langAll': 'Todos', 'filter.pt': 'Português', 'filter.en': 'English',
+    'filter.empty': 'Nenhum vídeo com esses filtros.', 'filter.clear': 'Limpar filtros',
     'about.title': 'Sobre',
     'about.body': 'Texto provisório. Aqui entra uma apresentação curta da Laiza: há quanto tempo edita, com quais criadores já trabalhou e como funciona o processo de edição.',
     'about.photo': 'Foto em breve',
@@ -86,6 +101,8 @@ const I18N = {
     'hero.reelAria': 'Watch the showreel', 'hero.reelSoon': 'Coming soon', 'hero.reelWatch': 'Watch',
     'work.title': 'Work', 'work.long': 'Long-form',
     'filter.all': 'All',
+    'filter.lang': 'Video language', 'filter.langAll': 'All', 'filter.pt': 'Português', 'filter.en': 'English',
+    'filter.empty': 'No videos match these filters.', 'filter.clear': 'Clear filters',
     'about.title': 'About',
     'about.body': 'Placeholder text. A short introduction to Laiza goes here: how long she has been editing, which creators she has worked with and how her editing process works.',
     'about.photo': 'Photo coming soon',
@@ -117,6 +134,9 @@ const I18N = {
 
   let tab = 'shorts';
   const filters = { shorts: 'all', long: 'all' };
+  let vlang = 'all'; // filtro de idioma do vídeo, vale para as duas abas
+  const catName = c => (typeof CATS[c] === 'string' ? CATS[c] : (CATS[c] || {})[lang] || '');
+  const titleOf = i => (typeof i.title === 'string' ? i.title : i.title[lang]);
   const byId = {};
   WORK.shorts.forEach(i => { byId[i.id] = { ...i, format: 'short' }; });
   WORK.long.forEach(i => { byId[i.id] = { ...i, format: 'long' }; });
@@ -136,41 +156,76 @@ const I18N = {
   const observe = scope => $$('.reveal:not(.is-in)', scope).forEach(el => (io ? io.observe(el) : el.classList.add('is-in')));
 
   /* ---------- Cards ---------- */
-  const thumbOf = i => i.thumb || (i.youtube ? `https://i.ytimg.com/vi/${encodeURIComponent(i.youtube)}/hqdefault.jpg` : '');
+  // capas do YouTube: vertical (oar2) para Shorts, maxres para longos;
+  // se a versão grande não existir, cai para hqdefault
+  const yt = (id, file) => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${file}.jpg`;
+  const thumbOf = i => i.thumb || (i.youtube ? yt(i.youtube, i.format === 'short' ? 'oar2' : 'maxresdefault') : '');
+  const fallbackOf = i => (i.youtube ? yt(i.youtube, 'hqdefault') : '');
   // posição do "brilho" do placeholder varia por card
   const glow = n => `--px:${[28, 70, 45, 62, 35, 55][n % 6]}%;--py:${[22, 35, 65, 18, 50, 30][n % 6]}%`;
 
   function card(i, n, cols, instant) {
     const thumb = thumbOf(i);
-    const img = thumb ? `background-image:url('${esc(thumb)}');` : '';
-    const label = `${t('card.open')}: ${i.title[lang]}`;
+    const img = thumb
+      ? `<img src="${esc(thumb)}" data-fallback="${esc(fallbackOf(i))}" alt="" loading="lazy" decoding="async">`
+      : '';
+    const title = titleOf(i);
+    const label = `${t('card.open')}: ${title}`;
+    const channel = i.channel ? `<span class="card__channel">${esc(i.channel)}</span>` : '';
     return `<li class="card reveal${instant ? ' is-in' : ''}" style="--d:${(n % cols) * 90}ms">` +
       `<button type="button" class="card__btn" data-open="${i.id}" aria-label="${esc(label)}">` +
       `<span class="card__media">` +
-      `<span class="card__img" style="${img}${glow(n)}"></span>` +
-      `<span class="card__dur">${esc(i.dur)}</span>` +
+      `<span class="card__img" style="${glow(n)}">${img}</span>` +
+      `<span class="card__lang" lang="${i.lang === 'en' ? 'en' : 'pt-BR'}">${i.lang === 'en' ? 'EN' : 'PT'}</span>` +
       `<span class="card__overlay" aria-hidden="true">` +
       `<span class="card__play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span>` +
-      `<span class="card__cat">${esc(CATS[i.cat])}</span>` +
-      `<span class="card__title">${esc(i.title[lang])}</span></span></span>` +
-      `<span class="card__caption" aria-hidden="true"><span class="card__cat">${esc(CATS[i.cat])}</span>` +
-      `<span class="card__title">${esc(i.title[lang])}</span></span>` +
+      `<span class="card__cat">${esc(catName(i.cat))}</span>` +
+      `<span class="card__title">${esc(title)}</span>${channel}</span></span>` +
+      `<span class="card__caption" aria-hidden="true"><span class="card__cat">${esc(catName(i.cat))}</span>` +
+      `<span class="card__title">${esc(title)}</span>${channel}</span>` +
       `</button></li>`;
   }
+
+  // troca a capa pela reserva quando a grande não existe (o YouTube devolve 120×90)
+  function wireThumbs(scope) {
+    $$('img[data-fallback]', scope).forEach(img => {
+      const fb = img.dataset.fallback;
+      const check = () => {
+        if (fb && img.src !== fb && img.naturalWidth <= 120) img.src = fb;
+      };
+      img.addEventListener('load', check);
+      img.addEventListener('error', () => { if (fb && img.src !== fb) img.src = fb; });
+      if (img.complete && img.naturalWidth) check();
+    });
+  }
+
+  const matches = (group, i) =>
+    (filters[group] === 'all' || i.cat === filters[group]) && (vlang === 'all' || i.lang === vlang);
 
   function renderList(group, instant) {
     const list = group === 'shorts' ? $('#shortsList') : $('#longList');
     const cols = group === 'shorts' ? 4 : 2;
-    const items = WORK[group].filter(i => filters[group] === 'all' || i.cat === filters[group]).map(i => byId[i.id]);
-    list.innerHTML = items.map((i, n) => card(i, n, cols, instant)).join('');
+    const items = WORK[group].filter(i => matches(group, i)).map(i => byId[i.id]);
+    list.innerHTML = items.length
+      ? items.map((i, n) => card(i, n, cols, instant)).join('')
+      : `<li class="grid__empty"><p>${esc(t('filter.empty'))}</p>` +
+        `<button type="button" class="btn" data-clear-filters>${esc(t('filter.clear'))}</button></li>`;
+    wireThumbs(list);
     observe(list);
   }
 
   function renderFilters() {
     const cats = [...new Set(WORK[tab].map(i => i.cat))];
-    $('#filters').innerHTML = ['all', ...cats].map(c =>
-      `<button type="button" data-filter="${c}" aria-pressed="${filters[tab] === c}">${esc(c === 'all' ? t('filter.all') : CATS[c])}</button>`
+    const catBtns = ['all', ...cats].map(c =>
+      `<button type="button" data-filter="${c}" aria-pressed="${filters[tab] === c}">${esc(c === 'all' ? t('filter.all') : catName(c))}</button>`
     ).join('');
+    const langBtns = [['all', 'filter.langAll'], ['pt', 'filter.pt'], ['en', 'filter.en']].map(([v, k]) =>
+      `<button type="button" data-vlang="${v}" aria-pressed="${vlang === v}">${esc(t(k))}</button>`
+    ).join('');
+    $('#filters').innerHTML =
+      `<div class="filters__group" role="group" aria-label="${esc(t('aria.filters'))}">${catBtns}</div>` +
+      `<div class="filters__group filters__group--lang" role="group" aria-label="${esc(t('filter.lang'))}">` +
+      `<span class="filters__label" aria-hidden="true">${esc(t('filter.lang'))}</span>${langBtns}</div>`;
   }
 
   $('#count-shorts').textContent = WORK.shorts.length;
@@ -211,16 +266,25 @@ const I18N = {
   });
 
   /* ---------- Filtros ---------- */
-  $('#filters').addEventListener('click', async e => {
-    const b = e.target.closest('[data-filter]');
-    if (!b || filters[tab] === b.dataset.filter) return;
-    filters[tab] = b.dataset.filter;
+  async function refilter(change) {
+    change();
     renderFilters();
     const list = tab === 'shorts' ? $('#shortsList') : $('#longList');
     list.classList.add('is-swapping');
     await wait(300);
     renderList(tab, true);
+    // o filtro de idioma vale para as duas abas: atualiza a outra também
+    renderList(tab === 'shorts' ? 'long' : 'shorts', true);
     list.classList.remove('is-swapping');
+  }
+  $('#filters').addEventListener('click', e => {
+    const c = e.target.closest('[data-filter]');
+    if (c && filters[tab] !== c.dataset.filter) refilter(() => { filters[tab] = c.dataset.filter; });
+    const l = e.target.closest('[data-vlang]');
+    if (l && vlang !== l.dataset.vlang) refilter(() => { vlang = l.dataset.vlang; });
+  });
+  $('.panels').addEventListener('click', e => {
+    if (e.target.closest('[data-clear-filters]')) refilter(() => { filters[tab] = 'all'; vlang = 'all'; });
   });
 
   /* ---------- Idioma ---------- */
@@ -310,10 +374,10 @@ const I18N = {
   function openPlayer(i) {
     player.classList.toggle('player--short', i.format === 'short');
     $('#playerFrame').innerHTML = i.youtube
-      ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(i.youtube)}?autoplay=1&rel=0" title="${esc(i.title[lang])}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
+      ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(i.youtube)}?autoplay=1&rel=0" title="${esc(titleOf(i))}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
       : `<span class="player__soon">${esc(t('player.soon'))}</span>`;
-    $('#playerCat').textContent = i.cat ? CATS[i.cat] : '';
-    $('#playerTitle').textContent = i.title[lang];
+    $('#playerCat').textContent = i.cat ? catName(i.cat) : '';
+    $('#playerTitle').textContent = titleOf(i);
     player.showModal();
   }
   $('#playerClose').addEventListener('click', () => player.close());

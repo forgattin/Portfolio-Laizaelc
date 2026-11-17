@@ -411,7 +411,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--line);
   font-size: .875rem;
+  justify-content: space-between;
+  align-items: baseline;
 }
+.filters__group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 28px; }
+.filters__group--lang { gap: 8px 20px; }
+.filters__label { color: color-mix(in srgb, var(--muted) 70%, transparent); font-size: .8125rem; }
 .filters button { color: var(--muted); transition: color .3s var(--ease); }
 .filters button:hover { color: var(--fg); }
 .filters button[aria-pressed="true"] { color: var(--accent); }
@@ -445,7 +450,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background-position: center;
   transition: transform 1.6s var(--ease-out);
 }
-.card__img[style*="url("] { background-color: var(--ph-b); }
+.card__img img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
 .card__overlay {
   position: absolute;
   inset: 0;
@@ -483,22 +493,35 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transition: transform .9s var(--ease-out);
 }
 .card__play svg { width: 14px; height: 14px; margin-left: 2px; fill: #EDEDED; }
-.card__dur {
+/* selo de idioma do vídeo, legível sobre qualquer capa */
+.card__lang {
   position: absolute;
-  top: clamp(12px, 1.4vw, 20px);
-  right: clamp(12px, 1.4vw, 20px);
-  font-size: .75rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  transition: color .5s var(--ease);
+  top: clamp(10px, 1.2vw, 16px);
+  right: clamp(10px, 1.2vw, 16px);
+  padding: 3px 7px;
+  border: 1px solid rgba(237, 237, 237, .22);
+  background: rgba(10, 10, 10, .55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: .6875rem;
+  letter-spacing: .12em;
+  color: #EDEDED;
 }
+.card__channel { font-size: .8125rem; color: rgba(237, 237, 237, .7); }
 .card__caption { display: none; }
+
+.grid__empty {
+  grid-column: 1 / -1;
+  padding: clamp(40px, 8vh, 80px) 0;
+  text-align: center;
+  color: var(--muted);
+}
+.grid__empty p { margin: 0 0 24px; }
 
 .card__btn:hover .card__img, .card__btn:focus-visible .card__img { transform: scale(1.05); }
 .card__btn:hover .card__overlay, .card__btn:focus-visible .card__overlay { opacity: 1; }
 .card__btn:hover .card__title, .card__btn:focus-visible .card__title { transform: none; }
 .card__btn:hover .card__play, .card__btn:focus-visible .card__play { transform: none; }
-.card__btn:hover .card__dur, .card__btn:focus-visible .card__dur { color: #EDEDED; }
 .card__btn:focus-visible { outline: none; }
 .card__btn:focus-visible .card__media { outline: 1px solid var(--accent); outline-offset: 4px; }
 
@@ -508,6 +531,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .card__caption { display: flex; flex-direction: column; gap: 2px; margin-top: 14px; }
   .card__caption .card__cat { color: var(--accent); }
   .card__caption .card__title { color: var(--fg); transform: none; font-size: 1.25rem; }
+  .card__caption .card__channel { color: var(--muted); }
 }
 
 /* ---------- Sobre ---------- */
