@@ -35,9 +35,9 @@ const CINE = ['l1', 'l13', 'l9', 'l15', 'l10', 'l3'];
 const COLLABS = [
   { name: 'Felca', platform: 'youtube', url: 'https://www.youtube.com/@felcaseita', photo: 'assets/collabs/felca.webp' },
   { name: 'felquinhas', platform: 'youtube', url: 'https://www.youtube.com/@felquinhas', photo: 'assets/collabs/felquinhas.webp' },
-  { name: 'Joojina', platform: 'instagram', url: 'https://www.instagram.com/joojinavlr/', photo: '' },
+  { name: 'Joojina', platform: 'instagram', url: 'https://www.instagram.com/joojinavlr/', photo: 'assets/collabs/joojina.webp' },
   { name: 'Yulla', platform: 'youtube', url: 'https://www.youtube.com/@yullalol', photo: 'assets/collabs/yulla.webp' },
-  { name: 'povcain', platform: 'instagram', url: 'https://www.instagram.com/povcain/', photo: '' },
+  { name: 'povcain', platform: 'instagram', url: 'https://www.instagram.com/povcain/', photo: 'assets/collabs/povcain.webp' },
   { name: 'IANROCKS', platform: 'youtube', url: 'https://www.youtube.com/@IANROCKS0', photo: 'assets/collabs/ianrocks.webp' },
 ];
 
