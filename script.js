@@ -21,8 +21,12 @@ const CATS = {
   podcast: 'Podcast',
 };
 
-// Vídeo de destaque do topo (showreel). Cole o ID do YouTube quando tiver.
+// Vídeo de destaque do topo (showreel). Cole o ID do YouTube quando tiver:
+// o topo troca sozinho os destaques abaixo pelo showreel (padrão salvo).
 const REEL = { id: 'reel', youtube: '', thumb: '', title: { pt: 'Showreel 2026', en: 'Showreel 2026' } };
+
+// Destaques do topo enquanto não há showreel: 3 Shorts (ids da lista WORK).
+const FEATURED = ['s1', 's6', 's2'];
 
 // Colaborações (faixa abaixo do topo).
 // platform: 'youtube' | 'twitch' | 'instagram'
@@ -75,6 +79,7 @@ const I18N = {
     'hero.lede': 'Edição para criadores de conteúdo. Shorts que prendem nos primeiros segundos e vídeos longos com ritmo do começo ao fim.',
     'hero.cta': 'Ver trabalhos',
     'collabs.title': 'Colaborações',
+    'hero.featured': 'Trabalhos recentes',
     'hero.reelAria': 'Assistir ao showreel', 'hero.reelSoon': 'Em breve', 'hero.reelWatch': 'Assistir',
     'work.title': 'Trabalhos', 'work.long': 'Vídeos longos',
     'filter.all': 'Todos',
@@ -98,6 +103,7 @@ const I18N = {
     'hero.lede': 'Editing for content creators. Shorts that hook in the first seconds and long-form videos that hold their pace to the end.',
     'hero.cta': 'See the work',
     'collabs.title': 'Collaborations',
+    'hero.featured': 'Recent work',
     'hero.reelAria': 'Watch the showreel', 'hero.reelSoon': 'Coming soon', 'hero.reelWatch': 'Watch',
     'work.title': 'Work', 'work.long': 'Long-form',
     'filter.all': 'All',
@@ -143,7 +149,10 @@ const I18N = {
   byId.reel = { ...REEL, format: 'long' };
   const reelThumb = REEL.thumb || (REEL.youtube ? `https://i.ytimg.com/vi/${encodeURIComponent(REEL.youtube)}/maxresdefault.jpg` : '');
   if (reelThumb) document.querySelector('.reel__img').style.backgroundImage = `url('${reelThumb}')`;
-  if (REEL.youtube) document.querySelector('[data-i18n="hero.reelSoon"]').dataset.i18n = 'hero.reelWatch';
+  if (REEL.youtube) {
+    document.querySelector('[data-i18n="hero.reelSoon"]').dataset.i18n = 'hero.reelWatch';
+    document.querySelector('.hero').classList.add('hero--reel');
+  }
 
   /* ---------- Revelação ao rolar ---------- */
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
@@ -287,6 +296,43 @@ const I18N = {
     if (e.target.closest('[data-clear-filters]')) refilter(() => { filters[tab] = 'all'; vlang = 'all'; });
   });
 
+  /* ---------- Destaques do topo (enquanto não há showreel) ---------- */
+  function renderFeature() {
+    const list = $('#heroFeature .feature');
+    if (!list || REEL.youtube) return;
+    list.innerHTML = FEATURED.map(id => byId[id]).filter(Boolean).map(i => {
+      const title = titleOf(i);
+      return `<li><button type="button" class="feature__btn" data-open="${i.id}" aria-label="${esc(`${t('card.open')}: ${title}`)}">` +
+        `<span class="feature__media"><img src="${esc(thumbOf(i))}" data-fallback="${esc(fallbackOf(i))}" alt="" decoding="async">` +
+        `<span class="feature__play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></span>` +
+        `<span class="feature__title">${esc(title)}</span>` +
+        `<span class="feature__cat">${esc(catName(i.cat))}</span></button></li>`;
+    }).join('');
+    wireThumbs(list);
+  }
+
+  // leve profundidade: as três colunas acompanham o mouse em velocidades diferentes
+  if (!REEL.youtube && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const hero = $('.hero');
+    const depth = [-10, 14, -6];
+    let tx = 0, ty = 0, raf = 0;
+    const apply = () => {
+      raf = 0;
+      $$('#heroFeature .feature li').forEach((li, n) => {
+        li.style.setProperty('--mx', `${(tx * depth[n % 3]).toFixed(2)}px`);
+        li.style.setProperty('--my', `${(ty * depth[n % 3]).toFixed(2)}px`);
+      });
+    };
+    hero.addEventListener('pointermove', e => {
+      if (reduce.matches) return;
+      const r = hero.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width - 0.5;
+      ty = (e.clientY - r.top) / r.height - 0.5;
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+    hero.addEventListener('pointerleave', () => { tx = ty = 0; if (!raf) raf = requestAnimationFrame(apply); });
+  }
+
   /* ---------- Idioma ---------- */
   function applyLang(l) {
     lang = l;
@@ -300,6 +346,7 @@ const I18N = {
     renderFilters();
     renderList('shorts', $$('#shortsList .is-in').length > 0);
     renderList('long', $$('#longList .is-in').length > 0);
+    renderFeature();
   }
 
   $('.lang').addEventListener('click', async e => {
