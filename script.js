@@ -25,8 +25,9 @@ const CATS = {
 // o topo troca sozinho os destaques abaixo pelo showreel (padrão salvo).
 const REEL = { id: 'reel', youtube: '', thumb: '', title: { pt: 'Showreel 2026', en: 'Showreel 2026' } };
 
-// Destaques do topo enquanto não há showreel: 3 Shorts (ids da lista WORK).
-const FEATURED = ['s1', 's6', 's2'];
+// Vitrine do topo enquanto não há showreel: vídeos longos (ids da lista WORK)
+// que passam um de cada vez, com a capa em tela cheia.
+const CINE = ['l1', 'l13', 'l9', 'l15', 'l10', 'l3'];
 
 // Colaborações (faixa abaixo do topo).
 // platform: 'youtube' | 'twitch' | 'instagram'
@@ -79,7 +80,7 @@ const I18N = {
     'hero.lede': 'Edição para criadores de conteúdo. Shorts que prendem nos primeiros segundos e vídeos longos com ritmo do começo ao fim.',
     'hero.cta': 'Ver trabalhos',
     'collabs.title': 'Colaborações',
-    'hero.featured': 'Trabalhos recentes',
+    'hero.cineAria': 'Vitrine de trabalhos', 'hero.cineLabel': 'Seleção de trabalhos', 'hero.cineAll': 'Ver todos',
     'hero.reelAria': 'Assistir ao showreel', 'hero.reelSoon': 'Em breve', 'hero.reelWatch': 'Assistir',
     'work.title': 'Trabalhos', 'work.long': 'Vídeos longos',
     'filter.all': 'Todos',
@@ -103,7 +104,7 @@ const I18N = {
     'hero.lede': 'Editing for content creators. Shorts that hook in the first seconds and long-form videos that hold their pace to the end.',
     'hero.cta': 'See the work',
     'collabs.title': 'Collaborations',
-    'hero.featured': 'Recent work',
+    'hero.cineAria': 'Work showcase', 'hero.cineLabel': 'Selected work', 'hero.cineAll': 'See all',
     'hero.reelAria': 'Watch the showreel', 'hero.reelSoon': 'Coming soon', 'hero.reelWatch': 'Watch',
     'work.title': 'Work', 'work.long': 'Long-form',
     'filter.all': 'All',
@@ -296,42 +297,72 @@ const I18N = {
     if (e.target.closest('[data-clear-filters]')) refilter(() => { filters[tab] = 'all'; vlang = 'all'; });
   });
 
-  /* ---------- Destaques do topo (enquanto não há showreel) ---------- */
-  function renderFeature() {
-    const list = $('#heroFeature .feature');
-    if (!list || REEL.youtube) return;
-    list.innerHTML = FEATURED.map(id => byId[id]).filter(Boolean).map(i => {
-      const title = titleOf(i);
-      return `<li><button type="button" class="feature__btn" data-open="${i.id}" aria-label="${esc(`${t('card.open')}: ${title}`)}">` +
-        `<span class="feature__media"><img src="${esc(thumbOf(i))}" data-fallback="${esc(fallbackOf(i))}" alt="" decoding="async">` +
-        `<span class="feature__play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></span>` +
-        `<span class="feature__title">${esc(title)}</span>` +
-        `<span class="feature__cat">${esc(catName(i.cat))}</span></button></li>`;
-    }).join('');
-    wireThumbs(list);
-  }
+  /* ---------- Cine: vitrine do topo (enquanto não há showreel) ---------- */
+  const cine = (() => {
+    const box = $('#heroCine .cine');
+    const items = CINE.map(id => byId[id]).filter(i => i && i.youtube);
+    if (!box || REEL.youtube || !items.length) return { render() {} };
+    const SLIDE = 6; // segundos por vídeo
+    box.style.setProperty('--slide', `${SLIDE}s`);
+    const frames = $('.cine__frames', box), bars = $('.cine__bars', box), info = $('.cine__info', box);
+    let idx = 0;
 
-  // leve profundidade: as três colunas acompanham o mouse em velocidades diferentes
-  if (!REEL.youtube && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const hero = $('.hero');
-    const depth = [-10, 14, -6];
-    let tx = 0, ty = 0, raf = 0;
-    const apply = () => {
-      raf = 0;
-      $$('#heroFeature .feature li').forEach((li, n) => {
-        li.style.setProperty('--mx', `${(tx * depth[n % 3]).toFixed(2)}px`);
-        li.style.setProperty('--my', `${(ty * depth[n % 3]).toFixed(2)}px`);
+    frames.innerHTML = items.map((i, n) =>
+      `<img src="${esc(thumbOf(i))}" data-fallback="${esc(fallbackOf(i))}" alt="" decoding="async"${n ? ' loading="lazy"' : ''}>`
+    ).join('');
+    wireThumbs(frames);
+
+    function paintInfo() {
+      const i = items[idx];
+      $('.cine__cat', info).textContent = catName(i.cat);
+      $('.cine__title', info).textContent = titleOf(i);
+      $('.cine__channel', info).textContent = i.channel || '';
+      $('.cine__open', box).setAttribute('aria-label', `${t('card.open')}: ${titleOf(i)}`);
+    }
+
+    function render() {
+      bars.innerHTML = items.map((i, n) =>
+        `<button type="button" class="cine__bar" data-go="${n}" aria-label="${esc(`${n + 1} / ${items.length}: ${titleOf(i)}`)}"><span></span></button>`
+      ).join('');
+      show(idx, true);
+    }
+
+    function show(n, instant) {
+      idx = (n + items.length) % items.length;
+      $$('img', frames).forEach((img, k) => {
+        img.classList.remove('is-active');
+        if (k === idx) { void img.offsetWidth; img.classList.add('is-active'); } // reinicia o zoom
       });
-    };
-    hero.addEventListener('pointermove', e => {
-      if (reduce.matches) return;
-      const r = hero.getBoundingClientRect();
-      tx = (e.clientX - r.left) / r.width - 0.5;
-      ty = (e.clientY - r.top) / r.height - 0.5;
-      if (!raf) raf = requestAnimationFrame(apply);
+      $$('.cine__bar', bars).forEach((b, k) => {
+        b.classList.toggle('is-done', k < idx);
+        b.classList.remove('is-active');
+        if (k === idx) { void b.offsetWidth; b.classList.add('is-active'); }
+      });
+      if (instant) { paintInfo(); return; }
+      info.classList.add('is-out');
+      setTimeout(() => { paintInfo(); info.classList.remove('is-out'); }, reduce.matches ? 0 : 450);
+    }
+
+    // a barra ativa termina → próximo vídeo
+    bars.addEventListener('animationend', e => {
+      if (e.target.closest('.cine__bar.is-active')) show(idx + 1);
     });
-    hero.addEventListener('pointerleave', () => { tx = ty = 0; if (!raf) raf = requestAnimationFrame(apply); });
-  }
+    bars.addEventListener('click', e => {
+      const b = e.target.closest('[data-go]');
+      if (b) show(Number(b.dataset.go));
+    });
+    $('.cine__open', box).addEventListener('click', () => openPlayer(items[idx]));
+    // pausa com o mouse em cima, com foco dentro, ou fora da tela
+    const pause = on => box.classList.toggle('is-paused', on);
+    box.addEventListener('pointerenter', () => pause(true));
+    box.addEventListener('pointerleave', () => pause(false));
+    box.addEventListener('focusin', () => pause(true));
+    box.addEventListener('focusout', () => pause(false));
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { if (!box.matches(':hover')) pause(!e.isIntersecting); }).observe(box);
+    }
+    return { render };
+  })();
 
   /* ---------- Idioma ---------- */
   function applyLang(l) {
@@ -346,7 +377,7 @@ const I18N = {
     renderFilters();
     renderList('shorts', $$('#shortsList .is-in').length > 0);
     renderList('long', $$('#longList .is-in').length > 0);
-    renderFeature();
+    cine.render();
   }
 
   $('.lang').addEventListener('click', async e => {

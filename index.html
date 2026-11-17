@@ -75,13 +75,27 @@
         <p class="hero__lede" data-i18n="hero.lede"></p>
         <a class="hero__cta" href="#trabalhos" data-i18n="hero.cta">Ver trabalhos</a>
       </div>
-      <!-- Sem showreel: destaques com Shorts reais (lista FEATURED no script.js) -->
-      <div class="hero__feature" id="heroFeature">
-        <p class="hero__feature-label" data-i18n="hero.featured">Trabalhos recentes</p>
-        <ul class="feature"></ul>
-      </div>
+      <!-- Sem showreel: vitrine que passa pelas capas dos vídeos (lista CINE no script.js) -->
+      <figure class="hero__cine" id="heroCine">
+        <div class="cine" data-i18n-aria="hero.cineAria" role="region" aria-roledescription="carousel">
+          <div class="cine__frames"></div>
+          <button type="button" class="cine__open">
+            <span class="cine__play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span>
+          </button>
+          <div class="cine__info" aria-live="polite">
+            <span class="cine__cat"></span>
+            <span class="cine__title"></span>
+            <span class="cine__channel"></span>
+          </div>
+          <div class="cine__bars"></div>
+        </div>
+        <figcaption class="hero__cine-caption">
+          <span data-i18n="hero.cineLabel">Seleção de trabalhos</span>
+          <a href="#trabalhos" data-i18n="hero.cineAll">Ver todos</a>
+        </figcaption>
+      </figure>
       <!-- Padrão salvo: showreel em destaque. Aparece sozinho quando REEL.youtube
-           (no script.js) tiver um ID, e então substitui os destaques acima. -->
+           (no script.js) tiver um ID, e então substitui a vitrine acima. -->
       <figure class="hero__reel">
         <button type="button" class="reel" data-open="reel" data-i18n-aria="hero.reelAria">
           <span class="reel__img"></span>
