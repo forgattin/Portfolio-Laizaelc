@@ -1,73 +1,15 @@
 /* =========================================================
-   COMO EDITAR OS VÍDEOS
-   - Cada item da lista WORK é um vídeo.
-   - youtube: cole só o ID do vídeo (o trecho depois de "v=" ou
-     de "/shorts/"). A capa vem do YouTube automaticamente.
-     Deixe "" para mostrar "Vídeo em breve".
-   - thumb (opcional): link de uma imagem de capa própria.
-   - cat: uma das chaves de CATS.
-   - lang: idioma do vídeo, 'pt' ou 'en' (usado no filtro de idioma).
-   - title: título do vídeo. channel (opcional): canal onde foi publicado.
+   CONTEÚDO DO SITE
+   Vídeos, textos, fotos e colaborações são editados no painel
+   (/admin) e chegam por /api/content. Se o painel não estiver
+   disponível, o site usa public/content.json como padrão.
    ========================================================= */
 
-const CATS = {
-  valorant: 'Valorant',
-  lol: 'LoL',
-  react: 'React',
-  gaming: 'Gaming',
-  talking: 'Talking head',
-  irl: 'IRL',
-  cortes: { pt: 'Cortes', en: 'Clips' },
-  podcast: 'Podcast',
-};
-
-// Vídeo de destaque do topo (showreel). Cole o ID do YouTube quando tiver:
-// o topo troca sozinho os destaques abaixo pelo showreel (padrão salvo).
-const REEL = { id: 'reel', youtube: '', thumb: '', title: { pt: 'Showreel 2026', en: 'Showreel 2026' } };
-
-// Vitrine do topo enquanto não há showreel: vídeos longos (ids da lista WORK)
-// que passam um de cada vez, com a capa em tela cheia.
-const CINE = ['l1', 'l13', 'l9', 'l15', 'l10', 'l3'];
-
-// Colaborações (faixa abaixo do topo).
-// platform: 'youtube' | 'twitch' | 'instagram'
-// url: link do perfil (opcional). photo: link da foto (opcional).
-const COLLABS = [
-  { name: 'Felca', platform: 'youtube', url: 'https://www.youtube.com/@felcaseita', photo: 'assets/collabs/felca.webp' },
-  { name: 'felquinhas', platform: 'youtube', url: 'https://www.youtube.com/@felquinhas', photo: 'assets/collabs/felquinhas.webp' },
-  { name: 'Joojina', platform: 'instagram', url: 'https://www.instagram.com/joojinavlr/', photo: 'assets/collabs/joojina.webp' },
-  { name: 'Yulla', platform: 'youtube', url: 'https://www.youtube.com/@yullalol', photo: 'assets/collabs/yulla.webp' },
-  { name: 'povcain', platform: 'instagram', url: 'https://www.instagram.com/povcain/', photo: 'assets/collabs/povcain.webp' },
-  { name: 'IANROCKS', platform: 'youtube', url: 'https://www.youtube.com/@IANROCKS0', photo: 'assets/collabs/ianrocks.webp' },
-];
-
-const WORK = {
-  shorts: [
-    { id: 's1', cat: 'valorant', lang: 'pt', youtube: 'gj2zL7tGWqE', title: 'Joojina 1' },
-    { id: 's2', cat: 'valorant', lang: 'pt', youtube: 'gixkvSP0WlA', title: 'Daiki - Chamber' },
-    { id: 's3', cat: 'valorant', lang: 'pt', youtube: '75uGwh9wgc0', title: 'TCK - Joojina' },
-    { id: 's4', cat: 'valorant', lang: 'pt', youtube: 'hbQBnVU5bSU', title: 'Yulla - Estetica' },
-    { id: 's5', cat: 'lol', lang: 'en', youtube: '-IAu_RVri38', title: 'MadScientist - Glaive or Voltaic' },
-    { id: 's6', cat: 'react', lang: 'en', youtube: 'Mik-UF44QME', title: 'ChaseOh - Math' },
-  ],
-  long: [
-    { id: 'l1', cat: 'react', lang: 'en', youtube: 'aweNzBc45t4', title: 'The Most INSANE Minecraft Tiktoks Of All Time..', channel: 'IANROCKS' },
-    { id: 'l2', cat: 'react', lang: 'en', youtube: 'ORpL1mvb3ck', title: 'Secret Lokii' },
-    { id: 'l3', cat: 'react', lang: 'pt', youtube: 'cHv63LZ2IPY', title: 'os perigos noturnos da liberdade', channel: 'felquinhas' },
-    { id: 'l4', cat: 'react', lang: 'pt', youtube: '_213s5WyNcI', title: 'vai dar namoro do tiktok', channel: 'felquinhas' },
-    { id: 'l5', cat: 'react', lang: 'pt', youtube: 'X5DQUVilasI', title: 'egirls bebadas na liberdade são um perigo...', channel: 'felquinhas' },
-    { id: 'l6', cat: 'react', lang: 'pt', youtube: 'BveZIyYKweE', title: 'peculiaridades da rua augusta', channel: 'felquinhas' },
-    { id: 'l7', cat: 'react', lang: 'pt', youtube: 'H8XpVFc4SM0', title: 'pastora esquizoide do tiktok', channel: 'felquinhas' },
-    { id: 'l8', cat: 'react', lang: 'pt', youtube: 'sQ9QSBsIv6A', title: 'compilado tiktoks mais idi0tas da semana', channel: 'felquinhas' },
-    { id: 'l9', cat: 'irl', lang: 'en', youtube: '2XzBFEOdHP0', title: 'I Got Injured...', channel: 'IANROCKS' },
-    { id: 'l10', cat: 'gaming', lang: 'en', youtube: 'p99nOy109cw', title: 'sendo moggada por MITOMANIACAS', channel: 'Yulla' },
-    { id: 'l11', cat: 'gaming', lang: 'en', youtube: '5o_sJZUl0GE', title: 'VR store final' },
-    { id: 'l12', cat: 'gaming', lang: 'pt', youtube: 'uVCgRCqiBuM', title: 'Daiki - Haven' },
-    { id: 'l13', cat: 'talking', lang: 'pt', youtube: 'OCCsNsQr3Co', title: 'comentários do ifood', channel: 'Felca' },
-    { id: 'l14', cat: 'cortes', lang: 'pt', youtube: 'cR3PaxrJIZc', title: 'fazeno brincadeirinha gostosa', channel: 'felquinhas' },
-    { id: 'l15', cat: 'podcast', lang: 'pt', youtube: '-aPuVgZaxRY', title: 'Pablo Marçal foi cobrar o Felca ao vivo', channel: 'felquinhas' },
-  ],
-};
+let CATS = {};
+let REEL = { id: 'reel', youtube: '', thumb: '', title: { pt: 'Showreel', en: 'Showreel' } };
+let CINE = [];
+let COLLABS = [];
+const WORK = { shorts: [], long: [] };
 
 const I18N = {
   pt: {
@@ -76,6 +18,7 @@ const I18N = {
     'aria.nav': 'Seções', 'aria.lang': 'Idioma', 'aria.tabs': 'Formato', 'aria.filters': 'Filtrar por categoria',
     'theme.toLight': 'Ativar modo claro', 'theme.toDark': 'Ativar modo escuro',
     'hero.lede': 'Edição para criadores de conteúdo. Shorts que prendem nos primeiros segundos e vídeos longos com ritmo do começo ao fim.',
+    'hero.role': 'Video Editor', 'about.content': 'Gaming, React, Talking head, IRL',
     'hero.cta': 'Ver trabalhos',
     'collabs.title': 'Colaborações',
     'hero.cineAria': 'Vitrine de trabalhos', 'hero.cineLabel': 'Seleção de trabalhos', 'hero.cineAll': 'Ver todos', 'hero.cinePrev': 'Vídeo anterior', 'hero.cineNext': 'Próximo vídeo',
@@ -102,6 +45,7 @@ const I18N = {
     'aria.nav': 'Sections', 'aria.lang': 'Language', 'aria.tabs': 'Format', 'aria.filters': 'Filter by category',
     'theme.toLight': 'Switch to light mode', 'theme.toDark': 'Switch to dark mode',
     'hero.lede': 'Editing for content creators. Shorts that hook in the first seconds and long-form videos that hold their pace to the end.',
+    'hero.role': 'Video Editor', 'about.content': 'Gaming, React, Talking head, IRL',
     'hero.cta': 'See the work',
     'collabs.title': 'Collaborations',
     'hero.cineAria': 'Work showcase', 'hero.cineLabel': 'Selected work', 'hero.cineAll': 'See all', 'hero.cinePrev': 'Previous video', 'hero.cineNext': 'Next video',
@@ -124,7 +68,48 @@ const I18N = {
   },
 };
 
-(() => {
+// aplica o conteúdo (do painel ou padrão) nas variáveis e na página
+function applyContent(c) {
+  CATS = Object.fromEntries((c.categories || []).map(x => [x.id, { pt: x.pt, en: x.en || x.pt }]));
+  const vid = v => ({ id: String(v.id), youtube: v.youtube || '', title: v.title || '', channel: v.channel || '', cat: v.cat, lang: v.lang === 'en' ? 'en' : 'pt', thumb: v.thumb || '' });
+  WORK.shorts = (c.videos && c.videos.shorts || []).map(vid);
+  WORK.long = (c.videos && c.videos.long || []).map(vid);
+  CINE = Array.isArray(c.cine) ? c.cine.map(String) : [];
+  if (!CINE.length) CINE = WORK.long.slice(0, 6).map(v => v.id);
+  REEL.youtube = c.reel || '';
+  COLLABS = c.collabs || [];
+  const map = { role: 'hero.role', heroLede: 'hero.lede', aboutBody: 'about.body', aboutBody2: 'about.body2', aboutExp: 'about.exp',
+    aboutFormats: 'about.formats', aboutContent: 'about.content', contactLead: 'contact.lead', contactNote: 'contact.note' };
+  ['pt', 'en'].forEach(l => {
+    const tx = (c.text && c.text[l]) || {};
+    Object.entries(map).forEach(([k, key]) => { if (tx[k]) I18N[l][key] = tx[k]; });
+  });
+  const p = c.profile || {};
+  if (p.avatar) document.querySelector('.avatar img').src = p.avatar;
+  if (p.aboutPhoto) document.querySelector('.about__photo img').src = p.aboutPhoto;
+  const link = document.querySelector('.contact__link');
+  if (p.contactUrl) link.href = p.contactUrl;
+  if (p.contactHandle) link.textContent = p.contactHandle;
+}
+
+async function loadContent() {
+  const get = async url => {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 4000);
+    try {
+      const r = await fetch(url, { signal: ctl.signal, cache: 'no-cache' });
+      if (!r.ok || !(r.headers.get('content-type') || '').includes('json')) throw new Error(r.status);
+      return await r.json();
+    } finally { clearTimeout(timer); }
+  };
+  let c;
+  try { c = await get('/api/content'); } catch (e) {
+    try { c = await get('/content.json'); } catch (e2) { c = {}; }
+  }
+  applyContent(c);
+}
+
+loadContent().then(() => {
   const root = document.documentElement;
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
@@ -486,8 +471,10 @@ const I18N = {
     youtube: '<svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10 9.2v5.6l4.8-2.8z"/></svg>',
     twitch: '<svg viewBox="0 0 24 24"><path d="M4.5 3.5h16v10l-4 4h-4l-3 3v-3h-5z"/><path d="M11 8v4M15.5 8v4"/></svg>',
     instagram: '<svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17" cy="7" r=".6"/></svg>',
+    tiktok: '<svg viewBox="0 0 24 24"><path d="M14 3.5v11.2a3.8 3.8 0 1 1-3.8-3.8"/><path d="M14 3.5c.4 2.6 2.3 4.4 5 4.6"/></svg>',
+    x: '<svg viewBox="0 0 24 24"><path d="M4.5 4.5l15 15M19.5 4.5l-15 15"/></svg>',
   };
-  const PLATFORM = { youtube: 'YouTube', twitch: 'Twitch', instagram: 'Instagram' };
+  const PLATFORM = { youtube: 'YouTube', twitch: 'Twitch', instagram: 'Instagram', tiktok: 'TikTok', x: 'X' };
 
   function collabItem(c, hidden) {
     const photo = c.photo ? `<img src="${esc(c.photo)}" alt="" loading="lazy">` : esc(c.name.trim().charAt(0));
@@ -560,4 +547,4 @@ const I18N = {
     welcome.showModal();
     $(`[data-welcome="${lang}"]`, welcome).focus();
   }
-})();
+});

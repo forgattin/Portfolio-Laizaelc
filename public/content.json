@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "profile": {
+    "avatar": "/assets/avatar.webp",
+    "aboutPhoto": "/assets/laiza.webp",
+    "contactUrl": "https://x.com/laizaelc",
+    "contactHandle": "@laizaelc"
+  },
+  "text": {
+    "pt": {
+      "role": "Video Editor",
+      "heroLede": "Edição para criadores de conteúdo. Shorts que prendem nos primeiros segundos e vídeos longos com ritmo do começo ao fim.",
+      "aboutBody": "Sou editora de vídeo, apaixonada por videogames e por transformar ideias em conteúdos que prendem a atenção, transmitindo sentimento e personalidade! Com 3 anos de atuação profissional, desenvolvi um olhar atento para ritmo, narrativa, estética e tendências, além de facilidade para me adaptar a diferentes estilos e propostas criativas.",
+      "aboutBody2": "Meu trabalho combina criatividade e técnica para entregar vídeos dinâmicos, envolventes e alinhados à identidade de cada projeto. Estou sempre buscando novas referências, aprimorando minhas habilidades e explorando maneiras de tornar cada edição mais interessante e impactante.",
+      "aboutExp": "3 anos de atuação profissional",
+      "aboutFormats": "Shorts e vídeos longos",
+      "aboutContent": "Gaming, React, Talking head, IRL",
+      "contactLead": "Tem um vídeo para editar?",
+      "contactNote": "Mande uma DM no X."
+    },
+    "en": {
+      "role": "Video Editor",
+      "heroLede": "Editing for content creators. Shorts that hook in the first seconds and long-form videos that hold their pace to the end.",
+      "aboutBody": "I'm a video editor with a passion for video games and for turning ideas into content that grabs attention and carries real feeling and personality! Over three years of professional work, I've developed a keen eye for pacing, storytelling, aesthetics and trends, along with the flexibility to adapt to different styles and creative directions.",
+      "aboutBody2": "My work blends creativity and technique to deliver dynamic, engaging videos that stay true to each project's identity. I'm always looking for new references, sharpening my skills and finding ways to make every edit more compelling and impactful.",
+      "aboutExp": "3 years of professional work",
+      "aboutFormats": "Shorts and long-form",
+      "aboutContent": "Gaming, React, Talking head, IRL",
+      "contactLead": "Got a video to edit?",
+      "contactNote": "Send a DM on X."
+    }
+  },
+  "categories": [
+    {
+      "id": "valorant",
+      "pt": "Valorant",
+      "en": "Valorant"
+    },
+    {
+      "id": "lol",
+      "pt": "LoL",
+      "en": "LoL"
+    },
+    {
+      "id": "react",
+      "pt": "React",
+      "en": "React"
+    },
+    {
+      "id": "gaming",
+      "pt": "Gaming",
+      "en": "Gaming"
+    },
+    {
+      "id": "talking",
+      "pt": "Talking head",
+      "en": "Talking head"
+    },
+    {
+      "id": "irl",
+      "pt": "IRL",
+      "en": "IRL"
+    },
+    {
+      "id": "cortes",
+      "pt": "Cortes",
+      "en": "Clips"
+    },
+    {
+      "id": "podcast",
+      "pt": "Podcast",
+      "en": "Podcast"
+    }
+  ],
+  "videos": {
+    "shorts": [
+      {
+        "id": "s1",
+        "youtube": "gj2zL7tGWqE",
+        "title": "Joojina 1",
+        "channel": "",
+        "cat": "valorant",
+        "lang": "pt"
+      },
+      {
+        "id": "s2",
+        "youtube": "gixkvSP0WlA",
+        "title": "Daiki - Chamber",
+        "channel": "",
+        "cat": "valorant",
+        "lang": "pt"
+      },
+      {
+        "id": "s3",
+        "youtube": "75uGwh9wgc0",
+        "title": "TCK - Joojina",
+        "channel": "",
+        "cat": "valorant",
+        "lang": "pt"
+      },
+      {
+        "id": "s4",
+        "youtube": "hbQBnVU5bSU",
+        "title": "Yulla - Estetica",
+        "channel": "",
+        "cat": "valorant",
+        "lang": "pt"
+      },
+      {
+        "id": "s5",
+        "youtube": "-IAu_RVri38",
+        "title": "MadScientist - Glaive or Voltaic",
+        "channel": "",
+        "cat": "lol",
+        "lang": "en"
+      },
+      {
+        "id": "s6",
+        "youtube": "Mik-UF44QME",
+        "title": "ChaseOh - Math",
+        "channel": "",
+        "cat": "react",
+        "lang": "en"
+      }
+    ],
+    "long": [
+      {
+        "id": "l1",
+        "youtube": "aweNzBc45t4",
+        "title": "The Most INSANE Minecraft Tiktoks Of All Time..",
+        "channel": "IANROCKS",
+        "cat": "react",
+        "lang": "en"
+      },
+      {
+        "id": "l2",
+        "youtube": "ORpL1mvb3ck",
+        "title": "Secret Lokii",
+        "channel": "",
+        "cat": "react",
+        "lang": "en"
+      },
+      {
+        "id": "l3",
+        "youtube": "cHv63LZ2IPY",
+        "title": "os perigos noturnos da liberdade",
+        "channel": "felquinhas",
+        "cat": "react",
+        "lang": "pt"
+      },
+      {
+        "id": "l4",
+        "youtube": "_213s5WyNcI",
+        "title": "vai dar namoro do tiktok",
+        "channel": "felquinhas",
+        "cat": "react",
+        "lang": "pt"
+      },
+      {
+        "id": "l5",
+        "youtube": "X5DQUVilasI",
+        "title": "egirls bebadas na liberdade são um perigo...",
+        "channel": "felquinhas",
+        "cat": "react",
+        "lang": "pt"
+      },
+      {
+        "id": "l6",
+        "youtube": "BveZIyYKweE",
+        "title": "peculiaridades da rua augusta",
+        "channel": "felquinhas",
+        "cat": "react",
+        "lang": "pt"
+      },
+      {
+        "id": "l7",
+        "youtube": "H8XpVFc4SM0",
+        "title": "pastora esquizoide do tiktok",
+        "channel": "felquinhas",
+        "cat": "react",
+        "lang": "pt"
+      },
+      {
+        "id": "l8",
+        "youtube": "sQ9QSBsIv6A",
+        "title": "compilado tiktoks mais idi0tas da semana",
+        "channel": "felquinhas",
+        "cat": "react",
+        "lang": "pt"
+      },
+      {
+        "id": "l9",
+        "youtube": "2XzBFEOdHP0",
+        "title": "I Got Injured...",
+        "channel": "IANROCKS",
+        "cat": "irl",
+        "lang": "en"
+      },
+      {
+        "id": "l10",
+        "youtube": "p99nOy109cw",
+        "title": "sendo moggada por MITOMANIACAS",
+        "channel": "Yulla",
+        "cat": "gaming",
+        "lang": "en"
+      },
+      {
+        "id": "l11",
+        "youtube": "5o_sJZUl0GE",
+        "title": "VR store final",
+        "channel": "",
+        "cat": "gaming",
+        "lang": "en"
+      },
+      {
+        "id": "l12",
+        "youtube": "uVCgRCqiBuM",
+        "title": "Daiki - Haven",
+        "channel": "",
+        "cat": "gaming",
+        "lang": "pt"
+      },
+      {
+        "id": "l13",
+        "youtube": "OCCsNsQr3Co",
+        "title": "comentários do ifood",
+        "channel": "Felca",
+        "cat": "talking",
+        "lang": "pt"
+      },
+      {
+        "id": "l14",
+        "youtube": "cR3PaxrJIZc",
+        "title": "fazeno brincadeirinha gostosa",
+        "channel": "felquinhas",
+        "cat": "cortes",
+        "lang": "pt"
+      },
+      {
+        "id": "l15",
+        "youtube": "-aPuVgZaxRY",
+        "title": "Pablo Marçal foi cobrar o Felca ao vivo",
+        "channel": "felquinhas",
+        "cat": "podcast",
+        "lang": "pt"
+      }
+    ]
+  },
+  "cine": [
+    "l1",
+    "l13",
+    "l9",
+    "l15",
+    "l10",
+    "l3"
+  ],
+  "reel": "",
+  "collabs": [
+    {
+      "name": "Felca",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/@felcaseita",
+      "photo": "/assets/collabs/felca.webp"
+    },
+    {
+      "name": "felquinhas",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/@felquinhas",
+      "photo": "/assets/collabs/felquinhas.webp"
+    },
+    {
+      "name": "Joojina",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/joojinavlr/",
+      "photo": "/assets/collabs/joojina.webp"
+    },
+    {
+      "name": "Yulla",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/@yullalol",
+      "photo": "/assets/collabs/yulla.webp"
+    },
+    {
+      "name": "povcain",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/povcain/",
+      "photo": "/assets/collabs/povcain.webp"
+    },
+    {
+      "name": "IANROCKS",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/@IANROCKS0",
+      "photo": "/assets/collabs/ianrocks.webp"
+    }
+  ]
+}
