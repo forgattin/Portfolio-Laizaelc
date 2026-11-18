@@ -39,7 +39,7 @@
 
   /* ---------- servidor ---------- */
   async function api(path, opts = {}) {
-    const headers = { ...(opts.headers || {}) };
+    const headers = { 'X-Requested-With': 'painel', ...(opts.headers || {}) };
     if (opts.json !== undefined) { headers['content-type'] = 'application/json'; opts.body = JSON.stringify(opts.json); }
     const r = await fetch(path, { method: opts.method || 'GET', body: opts.body, headers, credentials: 'same-origin' });
     let data = null;
@@ -166,6 +166,7 @@
     }
     storageOk = s.storage;
     if (!s.configured) return showSetup('Faltam o usuário e a senha do painel nas configurações do projeto no Cloudflare (ADMIN_USER e ADMIN_PASSWORD).');
+    if (s.weak) return showSetup('Por segurança, o painel só funciona com uma senha de pelo menos 12 caracteres. Troque o ADMIN_PASSWORD no Cloudflare e publique de novo.');
     if (!s.user) return showLogin();
     await openApp();
   }
@@ -214,6 +215,7 @@
     } catch (ex) {
       const left = ex.data && ex.data.left;
       err.textContent = ex.status === 429 ? 'Muitas tentativas erradas. Espere 15 minutos e tente de novo.'
+        : ex.message === 'weak_password' ? 'A senha cadastrada no Cloudflare é curta demais (mínimo 12 caracteres).'
         : ex.status === 401 ? 'Usuário ou senha incorretos.' + (left !== undefined && left <= 3 ? ` Restam ${left} tentativas.` : '')
         : 'Não foi possível entrar agora. Verifique a internet e tente de novo.';
       err.hidden = false;

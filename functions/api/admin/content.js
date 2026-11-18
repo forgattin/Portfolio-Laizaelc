@@ -23,16 +23,23 @@ const TEXT_KEYS = ['role', 'heroLede', 'aboutBody', 'aboutBody2', 'aboutExp', 'a
 
 const str = (v, max) => String(v ?? '').slice(0, max).trim();
 const ytId = v => (/^[A-Za-z0-9_-]{11}$/.test(String(v || '')) ? String(v) : '');
+// links externos: só https, sem usuário/senha embutidos
 function url(v) {
   const s = str(v, 800);
   if (!s) return '';
-  if (/^\/(assets|api\/img)\/[\w./-]+$/.test(s)) return s;
   try {
     const u = new URL(s);
-    return u.protocol === 'https:' || u.protocol === 'http:' ? u.href : '';
+    return u.protocol === 'https:' && !u.username && !u.password ? u.href : '';
   } catch (e) {
     return '';
   }
+}
+// imagens: só arquivos do próprio site (nada de imagem de terceiros rastreando visitantes)
+function localImage(v) {
+  const s = str(v, 200);
+  if (/^\/assets\/[\w-]+(\/[\w-]+)*\.(webp|jpe?g|png)$/.test(s)) return s;
+  if (/^\/api\/img\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s)) return s;
+  return '';
 }
 
 function clean(c) {
@@ -65,7 +72,7 @@ function clean(c) {
       name: str(x && x.name, 60),
       platform: PLATFORMS.includes(x && x.platform) ? x.platform : 'youtube',
       url: url(x && x.url),
-      photo: url(x && x.photo),
+      photo: localImage(x && x.photo),
     }))
     .filter(x => x.name);
 
@@ -77,8 +84,8 @@ function clean(c) {
 
   const p = c.profile || {};
   const profile = {
-    avatar: url(p.avatar),
-    aboutPhoto: url(p.aboutPhoto),
+    avatar: localImage(p.avatar),
+    aboutPhoto: localImage(p.aboutPhoto),
     contactUrl: url(p.contactUrl),
     contactHandle: str(p.contactHandle, 60),
   };

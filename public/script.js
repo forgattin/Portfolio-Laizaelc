@@ -85,10 +85,13 @@ function applyContent(c) {
     Object.entries(map).forEach(([k, key]) => { if (tx[k]) I18N[l][key] = tx[k]; });
   });
   const p = c.profile || {};
-  if (p.avatar) document.querySelector('.avatar img').src = p.avatar;
-  if (p.aboutPhoto) document.querySelector('.about__photo img').src = p.aboutPhoto;
+  // imagens só do próprio site
+  const local = u => typeof u === 'string' && /^\/(assets|api\/img)\//.test(u);
+  if (local(p.avatar)) document.querySelector('.avatar img').src = p.avatar;
+  if (local(p.aboutPhoto)) document.querySelector('.about__photo img').src = p.aboutPhoto;
+  COLLABS = COLLABS.map(x => ({ ...x, photo: local(x.photo) ? x.photo : '' }));
   const link = document.querySelector('.contact__link');
-  if (p.contactUrl) link.href = p.contactUrl;
+  if (/^https:\/\//.test(p.contactUrl || '')) link.href = p.contactUrl;
   if (p.contactHandle) link.textContent = p.contactHandle;
 }
 
@@ -483,8 +486,9 @@ loadContent().then(() => {
       `<span class="collab__name">${esc(c.name)}</span>` +
       `<span class="collab__icon" role="img" aria-label="${PLATFORM[c.platform] || ''}">${ICONS[c.platform] || ''}</span>`;
     const tab = hidden ? ' tabindex="-1"' : '';
-    return `<li${hidden ? ' aria-hidden="true"' : ''}>${c.url
-      ? `<a class="collab" href="${esc(c.url)}" target="_blank" rel="noopener"${tab}>${inner}</a>`
+    const safeUrl = /^https:\/\//.test(c.url || '') ? c.url : '';
+    return `<li${hidden ? ' aria-hidden="true"' : ''}>${safeUrl
+      ? `<a class="collab" href="${esc(safeUrl)}" target="_blank" rel="noopener noreferrer"${tab}>${inner}</a>`
       : `<span class="collab">${inner}</span>`}</li>`;
   }
 
